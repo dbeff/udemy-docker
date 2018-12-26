@@ -5,7 +5,7 @@ WORKDIR /app
 COPY package.json .
 RUN npm install
 
-# COPY . . Optional if using docker-composer
+COPY . .
 
 CMD ["npm", "run", "start"]
 
