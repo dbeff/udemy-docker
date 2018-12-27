@@ -3,8 +3,21 @@ services:
   - docker
 
 before_install:
- - docker build -t dbeff/udemy-docker -f Dockerfile.dev .
+  - docker build -t dbeff/udemy-docker -f Dockerfile.dev .
 
 script:
   - docker run dbeff/udemy-docker  npm run test -- --coverage
-  
+
+deploy:
+  provider: elasticbeanstalk
+  region: "us-west-2"
+  app: "udemy-docker"
+  env: "UdemyDocker-env"
+  bucket_name: "elasticbeanstalk-us-west-2-656277349798"
+  bucket_path: "udemy-docker"
+  on: 
+    branch: master
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key:
+    secure: "$AWS_ACCESS_SECRET_KEY"
+
